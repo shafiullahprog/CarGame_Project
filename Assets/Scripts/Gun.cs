@@ -4,17 +4,51 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    public GameObject gunPoint;
-    //public GameObject impactObject;
+    public Transform gunPoint;
     public float GunShootRange;
     public float damage;
+    public float bulletSpeed;
 
+    //Audio
+    public AudioSource source;
+    public AudioClip GunShootClip;
+
+    //Fire particles
+    public GameObject muzzlePrefab;
+    public GameObject hitPointMuzzle;
+    public GameObject muzzlePosition;
+
+    //gun shoot timer
+    float shotCounter;
+    public float rateOfCounter;
+
+    private bool isFiring;
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetButtonDown("Fire1"))
         {
-            Shoot();
+            isFiring = true;
         }
+        else if(Input.GetButtonUp("Fire1"))
+        {
+            isFiring = false;
+        }
+
+        if (isFiring)
+        {
+            GunFire();
+        }
+    }
+
+    void GunFire()
+    {
+            shotCounter -= Time.deltaTime;
+
+            if(shotCounter <= 0)
+            {
+                shotCounter = rateOfCounter;
+                Shoot();
+            }
     }
 
     void Shoot()
@@ -29,27 +63,35 @@ public class Gun : MonoBehaviour
             {
                 target.TakeDamage(damage);
             }
-            //GameObject bullets = Instantiate(impactObject, hit.point, Quaternion.LookRotation(hit.normal));
             StartCoroutine(InstantiateBullets());
+
         }
         else
         {
-            //Debug.Log("Shoot");
+            //shoot randomly
             StartCoroutine(InstantiateBullets());
         }
-
     }
+
+   
 
     IEnumerator InstantiateBullets()
     {
+        //gun sound
+        source.PlayOneShot(GunShootClip, 0.2f);
+
+        var flash = Instantiate(muzzlePrefab, muzzlePosition.transform.position, Quaternion.identity);
+        //instantiating bullet objects from ObjectPooling script
         GameObject bullet = ObjectPooling.instance.GetPooledObject();
-        bullet.transform.position = gunPoint.transform.forward;
-        //bullet.transform.rotation = gunPoint.transform.rotation;
+        bullet.transform.position = gunPoint.transform.position;
+        bullet.GetComponent<Rigidbody>().velocity = gunPoint.forward * bulletSpeed;
         bullet.SetActive(true);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1f);
 
         bullet.SetActive(false);
+        Destroy(flash);
+
     }
 
 }
