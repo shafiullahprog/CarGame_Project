@@ -27,11 +27,11 @@ public class Gun : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire1"))
         {
-            isFiring = true;
+            //isFiring = true;
         }
         else if(Input.GetButtonUp("Fire1"))
         {
-            isFiring = false;
+            //isFiring = false;
         }
 
         if (isFiring)
@@ -64,11 +64,9 @@ public class Gun : MonoBehaviour
                 target.TakeDamage(damage);
             }
             StartCoroutine(InstantiateBullets());
-
         }
         else
         {
-            //shoot randomly
             StartCoroutine(InstantiateBullets());
         }
     }
@@ -80,17 +78,25 @@ public class Gun : MonoBehaviour
         //gun sound
         source.PlayOneShot(GunShootClip, 0.2f);
 
+        //instantiate fire on the gunpoint
         var flash = Instantiate(muzzlePrefab, muzzlePosition.transform.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(0.2f);
+       
         //instantiating bullet objects from ObjectPooling script
         GameObject bullet = ObjectPooling.instance.GetPooledObject();
         bullet.transform.position = gunPoint.transform.position;
         bullet.GetComponent<Rigidbody>().velocity = gunPoint.forward * bulletSpeed;
         bullet.SetActive(true);
 
+        //destroying flash(fire);
+        Destroy(flash);
+
         yield return new WaitForSeconds(1f);
 
         bullet.SetActive(false);
-        Destroy(flash);
+
+        
 
     }
 
