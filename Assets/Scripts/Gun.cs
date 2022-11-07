@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    public FireHandler fireHandler;
+
     public Transform gunPoint;
     public float GunShootRange;
     public float damage;
@@ -23,15 +25,17 @@ public class Gun : MonoBehaviour
     public float rateOfCounter;
 
     private bool isFiring;
+
     private void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if(fireHandler.shoot)
         {
-            //isFiring = true;
+            isFiring = true;
         }
-        else if(Input.GetButtonUp("Fire1"))
-        {
-            //isFiring = false;
+        else
+        { 
+
+            isFiring = false;
         }
 
         if (isFiring)
@@ -95,9 +99,6 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         bullet.SetActive(false);
-
-        
-
     }
 
 }
