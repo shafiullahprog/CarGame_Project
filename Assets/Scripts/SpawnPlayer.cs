@@ -28,7 +28,7 @@ public class SpawnPlayer : MonoBehaviour
 
         GameObject gun = Instantiate(Gun[getGunNum]);
         gun.transform.parent = car.transform;
-        gun.transform.position = gunSpwanPosition;
+        gun.transform.position = car.transform.position + new Vector3(0, 0.7f, 1.5f);
     }
 
     private void Update()

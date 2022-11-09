@@ -15,11 +15,11 @@ public class CameraController : MonoBehaviour
     bool isOriginalPostion = false;
     public bool isLookAtOf;
 
+    int currentCam = 1;
     private void Start()
     {
         //distance from car to camera
         offset = transform.position - Target.position;
-
         isLookAtOf = true;
     }
 
@@ -29,8 +29,6 @@ public class CameraController : MonoBehaviour
         {
             isLookAtOf = false;
             isOriginalPostion = true;
-
-            //this.transform.rotation = Quaternion.Euler(0, 10f, 0);
             transform.LookAt(Target2);
             changeCamPos(cameraPos1);
         }
@@ -65,5 +63,4 @@ public class CameraController : MonoBehaviour
         transform.position = CameraPosition.position;
         offset = transform.position - Target.position;
     }
-
 }
