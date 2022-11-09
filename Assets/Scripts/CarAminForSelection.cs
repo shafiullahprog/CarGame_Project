@@ -38,27 +38,4 @@ public class CarAminForSelection : MonoBehaviour
     {
         transform.position = initialPos;
     }
-
-    //public void OnBeginDrag(PointerEventData eventData)
-    //{
-    //    isDragging = true;
-    //}
-    //public void OnEndDrag(PointerEventData eventData)
-    //{
-    //    isDragging = false;
-    //}
-    //public void OnDrag(PointerEventData eventData)
-    //{
-    //    direction = new Vector3(Input.GetAxis("Mouse X"), 0f, 0f);
-    //}
-
-    //private void FixedUpdate()
-    //{
-    //    if (isDragging)
-    //    {
-    //        rb.AddTorque(direction * force * Time.deltaTime);
-    //    }
-    //}
-
-
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    public FireHandler fireHandler;
+    [SerializeField]private FireHandler fireHandler;
 
     public Transform gunPoint;
     public float GunShootRange;
@@ -25,6 +25,11 @@ public class Gun : MonoBehaviour
     public float rateOfCounter;
 
     private bool isFiring;
+
+    private void Start()
+    {
+        fireHandler = FindObjectOfType<FireHandler>();
+    }
 
     private void Update()
     {
@@ -74,8 +79,6 @@ public class Gun : MonoBehaviour
             StartCoroutine(InstantiateBullets());
         }
     }
-
-   
 
     IEnumerator InstantiateBullets()
     {
