@@ -9,7 +9,7 @@ public class Target : MonoBehaviour
     public void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
-        CarHealth.value = health;
+        CarHealth.value -= health /100;
         if (health <= 0f)
         {
             Die();

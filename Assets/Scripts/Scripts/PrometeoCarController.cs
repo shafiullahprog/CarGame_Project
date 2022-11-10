@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
+//using Photon.Pun;
 
 public class PrometeoCarController : MonoBehaviour
 {
@@ -143,12 +143,12 @@ public class PrometeoCarController : MonoBehaviour
       float RRWextremumSlip;
 
 
-    PhotonView view;
+    //PhotonView view;
 
     // Start is called before the first frame update
     void Start()
     {
-        view = GetComponent<PhotonView>();
+       // view = GetComponent<PhotonView>();
 
 
       //In this part, we set the 'carRigidbody' value with the Rigidbody attached to this
@@ -266,8 +266,7 @@ public class PrometeoCarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (view.IsMine)
-        {
+      
 
             //CAR DATA
 
@@ -384,10 +383,6 @@ public class PrometeoCarController : MonoBehaviour
                 {
                     ResetSteeringAngle();
                 }
-            }
-
-
-
             // We call the method AnimateWheelMeshes() in order to match the wheel collider movements with the 3D meshes of the wheels.
             AnimateWheelMeshes();
         }

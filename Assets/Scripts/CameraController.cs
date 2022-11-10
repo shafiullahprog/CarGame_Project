@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -14,53 +13,69 @@ public class CameraController : MonoBehaviour
     public float DistancefromCar, HeightFromCar;
     bool isOriginalPostion = false;
     public bool isLookAtOf;
-
+    //PhotonView view;
     int currentCam = 1;
     private void Start()
     {
+       // view = GetComponent<PhotonView>();
         //distance from car to camera
         offset = transform.position - Target.position;
         isLookAtOf = true;
+        SwitchCar(currentCam);
     }
 
     private void Update()
-    {       
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            isLookAtOf = false;
-            isOriginalPostion = true;
-            transform.LookAt(Target2);
-            changeCamPos(cameraPos1);
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            isOriginalPostion = true;
-            changeCamPos(cameraPos2);
-            isLookAtOf = true;
-
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (isOriginalPostion)
+    {
+            transform.position = offset + Target.position;
+            if (isLookAtOf)
             {
-                isLookAtOf = true;
-                initialCameraPos = Target.position +  (Vector3.forward * -DistancefromCar) - (Vector3.up * HeightFromCar);
-                originalCamPos.position = initialCameraPos;
-                changeCamPos(originalCamPos);
-                isOriginalPostion = false;
-            }  
-        }
-
-        transform.position = offset + Target.position;
-        if (isLookAtOf)
-        {
-            transform.LookAt(Target);
-        }
+                transform.LookAt(Target);
+            }
     }
    
     void changeCamPos(Transform CameraPosition)
     {
         transform.position = CameraPosition.position;
         offset = transform.position - Target.position;
+    }
+
+    public void incrementCamValue()
+    {
+        currentCam++;
+        SwitchCar(currentCam);
+        if (currentCam >= 3)
+        {
+            currentCam = 0;
+        }
+    }
+
+    void SwitchCar(int camChanger)
+    {
+        switch (camChanger)
+        {
+            case 1:
+                isLookAtOf = false;
+                isOriginalPostion = true;
+                transform.LookAt(Target2);
+                changeCamPos(cameraPos1);
+            break;
+
+            case 2:
+                isOriginalPostion = true;
+                changeCamPos(cameraPos2);
+                isLookAtOf = true;
+                break;
+
+            case 3:
+                if (isOriginalPostion)
+                {
+                    isLookAtOf = true;
+                    initialCameraPos = Target.position + (Vector3.forward * -DistancefromCar) - (Vector3.up * HeightFromCar);
+                    originalCamPos.position = initialCameraPos;
+                    changeCamPos(originalCamPos);
+                    isOriginalPostion = false;
+                }
+            break;
+        }
     }
 }

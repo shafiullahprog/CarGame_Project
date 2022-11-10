@@ -3,20 +3,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject gameOverScreen;
+    private CameraController cameraController;
     private void Start()
     {
-        //getCarNum = PlayerPrefs.GetInt("CurrentCarNumber");
-        //getGunNum = PlayerPrefs.GetInt("CurrentGunNumber");
-
-        //GameObject car = Instantiate(Car[getCarNum]);
-        //car.transform.parent = spawnCarPosition.transform;
-        //car.transform.position = transform.position;
-
-        //GameObject gun = Instantiate(Gun[getGunNum]);
-        //gun.transform.parent = car.transform;
-        //gun.transform.position = gunSpwanPosition;
-
-        //spawnCarPosition.playerPrefab = car;
+        cameraController = FindObjectOfType<CameraController>();
     }
     public void PauseGame()
     {
@@ -32,5 +22,10 @@ public class GameManager : MonoBehaviour
     {
         PauseGame();
         gameOverScreen.SetActive(true);
+    }
+
+    public void changeCamera()
+    {
+        cameraController.incrementCamValue();
     }
 }
