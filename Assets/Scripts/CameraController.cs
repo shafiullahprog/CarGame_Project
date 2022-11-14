@@ -13,11 +13,11 @@ public class CameraController : MonoBehaviour
     public float DistancefromCar, HeightFromCar;
     bool isOriginalPostion = false;
     public bool isLookAtOf;
-    //PhotonView view;
+    PhotonView view;
     int currentCam = 1;
     private void Start()
     {
-       // view = GetComponent<PhotonView>();
+        view = GetComponent<PhotonView>();
         //distance from car to camera
         offset = transform.position - Target.position;
         isLookAtOf = true;
@@ -26,11 +26,14 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (view.IsMine)
+        {
             transform.position = offset + Target.position;
             if (isLookAtOf)
             {
                 transform.LookAt(Target);
             }
+        }
     }
    
     void changeCamPos(Transform CameraPosition)
